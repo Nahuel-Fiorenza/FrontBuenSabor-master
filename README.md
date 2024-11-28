@@ -8,21 +8,22 @@
 ```
 (SUPERADMIN)
 Correo: superadmin@mail.com
-Contraseña: Password12345
+Contraseña: Pass12345
  
 (ADMIN)
 Correo: admin@mail.com
-Contraseña: Password12345
-
-(CAJERO)
-Correo: cajero@mail.com
-Contraseña: Password12345
+Contraseña: Pass12345
 
 (COCINERO)
 Correo: cocinero@mail.com
-Contraseña: Password12345
+Contraseña: Pass12345
+
+(CAJERO)
+Correo: cajero@mail.com
+Contraseña: Pass12345
+
 
 (DELIVERY)
 Correo: delivery@mail.com
-Contraseña: Password12345
+Contraseña: Pass12345
 ```

@@ -1,22 +1,22 @@
 const colorConfigs = {
   sidebar: {
-    bg: "#233044",
+    bg: "#af2919",
     color: "#eeeeee",
     hoverBg: "#1e293a",
     activeBg: "#1e253a"
   },
   topbar: {
-    bg: "#233044",
+    bg: "#af2919",
     color: "#eeeeee"
   },
   buttonStyles: {
-    backgroundColor: "#233044",
+    backgroundColor: "#af2919",
     '&:hover': {
-      backgroundColor: "#48576f"
+      backgroundColor: "#334767"
     }
   },
   backButtonStyles: {
-    backgroundColor: "#59697f",
+    backgroundColor: "#af2919",
     '&:hover': {
       backgroundColor: "#6e7d92"
     }
@@ -25,7 +25,10 @@ const colorConfigs = {
     backgroundColor: "#1c1c1c",
     '&:hover': {
       backgroundColor: "#424242"
-    }
+    } 
+  },
+  textStyles: {
+    color: "#415a81"
   }
 };
 

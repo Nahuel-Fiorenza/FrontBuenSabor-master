@@ -1,5 +1,4 @@
 # Dashboard del Buen Sabor Vista Empresa
-# pasos
 1. Clonar el repositorio.
 2. Abrir el proyecto y ejecutar 'npm install'.
 3. Ejecutar el proyecto con el comando 'npm run dev'.

@@ -180,7 +180,7 @@ const EmpresaModal: React.FC<EmpresaCardProps> = ({ open, onClose, empresa, succ
                     <FormControl fullWidth error={!!errors.cuil}>
                         <TextField
                             margin="dense"
-                            label="Cuil"
+                            label="CUIL/CUIT"
                             name="cuil"
                             fullWidth
                             type="decimal"

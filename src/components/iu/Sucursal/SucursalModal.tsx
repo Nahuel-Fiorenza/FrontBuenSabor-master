@@ -357,43 +357,7 @@ const SucursalModal: React.FC<EmpresaCardProps> = ({ open, onClose, sucursal, su
                         />
                         {errors.nombre && <FormHelperText>{errors.nombre}</FormHelperText>}
                     </FormControl>
-                    <Grid container spacing={2} mb={2}>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth error={!!errors.horarioApertura}>
-                                <TextField
-                                    margin="normal"
-                                    label="Horario Apertura"
-                                    type="time"
-                                    name="horarioApertura"
-                                    fullWidth
-                                    value={currentSucursal.horarioApertura}
-                                    onChange={handleChange}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                                {errors.horarioApertura && <FormHelperText>{errors.horarioApertura}</FormHelperText>}
-                            </FormControl>
-
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControl fullWidth error={!!errors.horarioCierre}>
-                                <TextField
-                                    margin="normal"
-                                    label="Horario de Cierre"
-                                    name="horarioCierre"
-                                    type="time"
-                                    fullWidth
-                                    value={currentSucursal.horarioCierre}
-                                    onChange={handleChange}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                                {errors.horarioCierre && <FormHelperText>{errors.horarioCierre}</FormHelperText>}
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                  
                     <Grid container spacing={2} mb={2}>
                         <Grid item xs={6}>
                             <FormControl fullWidth error={!!errors.calle}>
@@ -594,6 +558,43 @@ const SucursalModal: React.FC<EmpresaCardProps> = ({ open, onClose, sucursal, su
                         </Grid>
                     </Grid>
                 </Box>
+                <Grid container spacing={2} mb={2}>
+                        <Grid item xs={6}>
+                            <FormControl fullWidth error={!!errors.horarioApertura}>
+                                <TextField
+                                    margin="normal"
+                                    label="Horario Apertura"
+                                    type="time"
+                                    name="horarioApertura"
+                                    fullWidth
+                                    value={currentSucursal.horarioApertura}
+                                    onChange={handleChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                                {errors.horarioApertura && <FormHelperText>{errors.horarioApertura}</FormHelperText>}
+                            </FormControl>
+
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FormControl fullWidth error={!!errors.horarioCierre}>
+                                <TextField
+                                    margin="normal"
+                                    label="Horario de Cierre"
+                                    name="horarioCierre"
+                                    type="time"
+                                    fullWidth
+                                    value={currentSucursal.horarioCierre}
+                                    onChange={handleChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                                {errors.horarioCierre && <FormHelperText>{errors.horarioCierre}</FormHelperText>}
+                            </FormControl>
+                        </Grid>
+                    </Grid>
                 <Box mt={2} display="flex" justifyContent="space-between">
                     <Button onClick={handleSave} variant="contained" sx={{ ...colorConfigs.buttonStyles }}>{sucursal.id > 0 ? 'Actualizar' : 'Crear'}</Button>
                 </Box>

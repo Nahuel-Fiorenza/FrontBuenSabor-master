@@ -66,7 +66,7 @@ function SucursalList() {
     };
 
     const handleSuccess = () => {
-        toast.success("Se creó correctamente", {
+        toast.success("Se creó correctamente la sucursal", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -80,7 +80,7 @@ function SucursalList() {
     }
 
     const handleError = () => {
-        toast.error("Error al crear la sucursal, intente más tarde", {
+        toast.error("Error al crear la sucursal, intentelo de nuevo", {
             position: "top-right",
             autoClose: 5000, // Tiempo en milisegundos antes de que se cierre automáticamente
             hideProgressBar: false,
@@ -98,7 +98,7 @@ function SucursalList() {
                 variant="h4"
                 component="h4"
                 align="center"
-                style={{ fontWeight: 'bold', marginBottom: '20px', color: '#2e7d32', textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)' }}
+                style={{ fontWeight: 'bold', marginBottom: '20px', color: 'black', textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)' }}
             >
                 Seleccione una Sucursal
             </Typography>
@@ -107,7 +107,7 @@ function SucursalList() {
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={() => handleOpen()}
-                    style={{ backgroundColor: '#2e7d32', color: 'white', marginBottom: '20px' }}
+                    style={{ backgroundColor: '#af2919', color: 'white', marginBottom: '20px' }}
                 >
                     Agregar nueva Sucursal
                 </Button>

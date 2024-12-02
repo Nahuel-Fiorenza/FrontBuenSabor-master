@@ -1,7 +1,7 @@
 const colorConfigs = {
   sidebar: {
     bg: "#af2919",
-    color: "#eeeeee",
+    color: "white",
     hoverBg: "#1e293a",
     activeBg: "#1e253a"
   },
@@ -22,7 +22,7 @@ const colorConfigs = {
     }
   },
   buttonIngresar: {
-    backgroundColor: "#1c1c1c",
+    backgroundColor: "#af2919",
     '&:hover': {
       backgroundColor: "#424242"
     } 

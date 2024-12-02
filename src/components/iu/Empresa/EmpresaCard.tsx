@@ -34,7 +34,7 @@ const EmpresaCard: React.FC<EmpresaCardProps> = ({ onClose, empresa }) => {
     }
 
     const handleSuccess = () => {
-        toast.success("Se actualizó correctamente", {
+        toast.success("Se actualizó correctamente la empresa", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -48,7 +48,7 @@ const EmpresaCard: React.FC<EmpresaCardProps> = ({ onClose, empresa }) => {
     }
 
     const handleError = () => {
-        toast.error("Error al actualizar la empresa, intente más tarde", {
+        toast.error("Error al actualizar la empresa, intentelo de nuevo", {
             position: "top-right",
             autoClose: 5000, // Tiempo en milisegundos antes de que se cierre automáticamente
             hideProgressBar: false,

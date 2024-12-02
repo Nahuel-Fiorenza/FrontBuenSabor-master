@@ -47,7 +47,7 @@ function EmpresaList() {
     }, []);
 
     const handleSuccess = () => {
-        toast.success("Se creó correctamente", {
+        toast.success("Se creó correctamente la empresa", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -61,7 +61,7 @@ function EmpresaList() {
     }
 
     const handleError = () => {
-        toast.error("Error al crear la empresa, intente más tarde", {
+        toast.error("Error al crear la empresa, intentelo de nuevo", {
             position: "top-right",
             autoClose: 5000, // Tiempo en milisegundos antes de que se cierre automáticamente
             hideProgressBar: false,
@@ -88,7 +88,7 @@ function EmpresaList() {
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={() => handleOpen()}
-                    style={{ backgroundColor: '#334e77', color: 'white', marginBottom: '20px' }}
+                    style={{ backgroundColor: '#af2919', color: 'white', marginBottom: '20px' }}
                 >
                     Crear Empresa
                 </Button>

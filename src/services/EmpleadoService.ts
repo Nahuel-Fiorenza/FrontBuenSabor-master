@@ -98,6 +98,8 @@ export async function EmpleadoDelete(id: number, token: string){
 
 export async function EmpleadoGetByEmail(email: string, token: string){
 	const urlServer = `${apiUrl}/empleado/findByEmail?email=${email}`;
+	console.log(token)
+
 	const response = await fetch(urlServer, {
 		method: 'GET',
         headers: {

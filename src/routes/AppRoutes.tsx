@@ -13,12 +13,15 @@ import PromocionList from "../screens/PromocionList";
 import ArticuloInsumoList from "../screens/ArticuloInsumoList";
 import UnidadMedidaList from "../screens/UnidadMedidaList";
 import PedidosList from "../screens/PedidosList";
+import Unauthorized from "../screens/unauthorized";
+
 
 export const AppRoutes: React.FC = () => {
 
     return (
         <Routes>
             <Route path="/" element={<Ingreso />}></Route>
+            <Route path="/unauthorized" element={<Unauthorized />} />
             <Route element={<PreLayout />}>
                 <Route element={<ProtectedRoute roles={['superadmin']} />}>
                     <Route path="/empresas" element={<Empresa />} />

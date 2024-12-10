@@ -40,7 +40,7 @@ const EmpleadoAddModal: React.FC<EmpleadoTableProps> = ({ open, onClose, emplead
                 audience: import.meta.env.VITE_AUTH0_AUDIENCE,
             },
         });
-
+        console.log(token)
         return await EmpleadoCreate(currentEmpleado, token);
     }
 

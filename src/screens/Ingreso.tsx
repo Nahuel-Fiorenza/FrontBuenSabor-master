@@ -1,7 +1,6 @@
 import { Container, Typography, Box, Button } from "@mui/material";
 import LoginButton from "../components/common/LoginButton";
 import LogoutButton from "../components/common/LogoutButton";
-
 import ingresoImage from '../assets/images/ingreso.png';
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";

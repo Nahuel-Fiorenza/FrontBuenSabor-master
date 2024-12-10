@@ -2,19 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Collapse, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Stack, Toolbar } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import CategoryIcon from "@mui/icons-material/Category";
 import sizeConfigs from "../../configs/sizeConfig";
+import EngineeringIcon from '@mui/icons-material/Engineering';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import colorConfigs from "../../configs/colorConfig";
-import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
-import FoodBankIcon from '@mui/icons-material/FoodBank';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import ScaleIcon from '@mui/icons-material/Scale';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import SpeedIcon from '@mui/icons-material/Speed';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import avatarImage from '../../assets/images/logo.png'
-import MonitorIcon from '@mui/icons-material/Monitor';
 import ProtectedComponent from "../auth0/ProtectedComponent";
 
 function SideBar() {
@@ -55,7 +55,7 @@ function SideBar() {
                             <ListItemIcon sx={{
                                 color: colorConfigs.sidebar.color
                             }}>
-                                <StackedBarChartIcon />
+                                <QueryStatsIcon />
                             </ListItemIcon>
                             <ListItemText primary="Estadisticas" />
                         </ListItemButton>
@@ -65,7 +65,7 @@ function SideBar() {
                             <ListItemIcon sx={{
                                 color: colorConfigs.sidebar.color
                             }}>
-                                <FoodBankIcon />
+                                <MenuBookIcon />
                             </ListItemIcon>
                             <ListItemText primary="Articulos" />
                             {openProducts ? <ExpandLess /> : <ExpandMore />}
@@ -106,7 +106,7 @@ function SideBar() {
                             <ListItemIcon sx={{
                                 color: colorConfigs.sidebar.color
                             }}>
-                                <AttachMoneyIcon />
+                                <VerifiedIcon />
                             </ListItemIcon>
                             <ListItemText primary="Promociones" />
                         </ListItemButton>
@@ -116,7 +116,7 @@ function SideBar() {
                             <ListItemIcon sx={{
                                 color: colorConfigs.sidebar.color
                             }}>
-                                <PeopleAltIcon />
+                                <EngineeringIcon />
                             </ListItemIcon>
                             <ListItemText primary="Empleados" />
                         </ListItemButton>
@@ -126,7 +126,7 @@ function SideBar() {
                             <ListItemIcon sx={{
                                 color: colorConfigs.sidebar.color
                             }}>
-                                <SpeedIcon />
+                                <ScaleIcon />
                             </ListItemIcon>
                             <ListItemText primary="Unidad de Medida" />
                         </ListItemButton>
@@ -135,7 +135,7 @@ function SideBar() {
                         <ListItemIcon sx={{
                             color: colorConfigs.sidebar.color
                         }}>
-                            <MonitorIcon />
+                            <ShoppingBagIcon />
                         </ListItemIcon>
                         <ListItemText primary="Pedidos" />
                     </ListItemButton>

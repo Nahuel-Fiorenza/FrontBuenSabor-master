@@ -112,6 +112,10 @@ function CategoriaList() {
             return true;
         });
 
+        const filteredActivoCategoria = categorias.filter(categoria => !categoria.eliminado);
+        
+
+
     return (
         <>
             <SideBar />
@@ -159,7 +163,7 @@ function CategoriaList() {
                     </Select>
                     <Stack direction="column" alignItems="flex-end">
                         <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
-                            <CategoryIcon /> {categorias.length}
+                            <CategoryIcon /> {filteredActivoCategoria.length}
                         </Typography>
                         <Typography variant="h6" sx={{ fontSize: "18px" }}>
                             Categorías

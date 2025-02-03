@@ -99,18 +99,18 @@ const SucursalCard: React.FC<EmpresaCardProps> = ({ onClose, sucursal }) => {
                 />
                 <CardActions style={{ justifyContent: 'space-between' }}>
                     <span style={{ display: 'flex', alignItems: 'center' }}>
-                        Casa Matriz: {sucursal.esCasaMatriz ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
+                        Casa Matriz: {sucursal.esCasaMatriz ? <CheckIcon /> : <CloseIcon color="error" />}
                     </span>
                     <div>
                     {!estaInicio && (
                         <div>
                             <Tooltip title="Editar">
                                 <IconButton onClick={handleOpen} color="primary">
-                                    <EditIcon color="success"/>
+                                    <EditIcon />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Ver">
-                                <Button variant="contained" color="success" sx={{ height: "30px", width: "90px" }} onClick={redirectDashboard}>
+                                <Button variant="contained"  sx={{ height: "30px", width: "90px",backgroundColor:"#af2919" }} onClick={redirectDashboard}>
                                     <VisibilityIcon /> Ver
                                 </Button>
                             </Tooltip>

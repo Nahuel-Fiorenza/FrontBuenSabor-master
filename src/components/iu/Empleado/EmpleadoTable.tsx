@@ -147,8 +147,8 @@ const EmpleadoTable: React.FC<EmpleadoTableProps> = ({ onClose, empleado }) => {
             </TableRow>
             <EmpleadoAddModal open={editOpen} onClose={handleClose} empleado={empleado} success={handleSuccess} error={handleError} />
             <EmpleadoViewModal open={view} onClose={handleClose} empleado={empleado} />
-            <DesactivarComponent openDialog={openBaja} onClose={handleCloseDialog} onConfirm={handleBaja} tipo='él empleado' entidad={empleado} />
-            <ActivarComponent openDialog={openAlta} onClose={handleCloseDialog} onConfirm={handleAlta} tipo='la promoción' entidad={empleado} />
+            <DesactivarComponent openDialog={openBaja} onClose={handleCloseDialog} onConfirm={handleBaja} tipo='El empleado' entidad={empleado} />
+            <ActivarComponent openDialog={openAlta} onClose={handleCloseDialog} onConfirm={handleAlta} tipo='La promoción' entidad={empleado} />
         </>
     );
 }

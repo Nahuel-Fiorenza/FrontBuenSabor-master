@@ -50,7 +50,7 @@ const SucursalDdl: React.FC = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     position: "absolute",
-                    left: "50%",
+                    left: "78%",
                     transform: "translateX(-50%)"
                 }}
             >

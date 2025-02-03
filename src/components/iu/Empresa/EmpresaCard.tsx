@@ -81,9 +81,9 @@ const EmpresaCard: React.FC<EmpresaCardProps> = ({ onClose, empresa }) => {
                             sx={{
                                 height: '30px',
                                 width: '170px',
-                                backgroundColor: '#334e77',
+                                backgroundColor: '#af2919',
                                 '&:hover': {
-                                    backgroundColor: '#253b5c',
+                                    backgroundColor: '#af2800',
                                 },
                             }}
                             onClick={redirectSucursal}

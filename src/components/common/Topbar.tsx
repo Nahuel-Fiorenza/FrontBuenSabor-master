@@ -1,11 +1,12 @@
 import { AppBar, Toolbar, Typography, Box, Avatar, Stack } from "@mui/material";
+import FoodBankIcon from '@mui/icons-material/FoodBank';
 import colorConfigs from "../../configs/colorConfig";
 import sizeConfigs from "../../configs/sizeConfig";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import avatarImage from '../../assets/images/logo.png';
 import SucursalDdl from "../iu/Sucursal/SucursalDdl";
 import ProtectedComponent from "../auth0/ProtectedComponent";
@@ -56,10 +57,22 @@ const Topbar = () => {
           direction="row"
           justifyContent="center"
         >
-          <Avatar src={avatarImage} sx={{ width: 70, height: 70 }} />
+         <Link to="http://localhost:5173">
+    <Avatar src={avatarImage} sx={{ width: 70, height: 70 }} />
+  </Link>
         </Stack>
         <Typography variant="h6"></Typography>
 
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            width: "100%",
+            fontSize: "24px", // Ajusta el tamaño de la letra (puedes cambiar el valor)
+            fontWeight: "bold" // Hace que el texto sea negrita
+          }}
+        > El Buen Sabor <FoodBankIcon></FoodBankIcon></Box>
         {
           !isSucursalOrEmpresa && (
             <ProtectedComponent roles={["administrador", "superadmin"]}>

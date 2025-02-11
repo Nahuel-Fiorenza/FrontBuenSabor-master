@@ -5,4 +5,5 @@ export default interface Usuario{
     eliminado: boolean
     email: string,
     rol: Rol | null
+    auth0Id: string
 }

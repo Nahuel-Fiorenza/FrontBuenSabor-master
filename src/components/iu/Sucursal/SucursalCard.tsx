@@ -9,10 +9,11 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
-import { SucursalGetByEmpresaId } from "../../../services/SucursalService";
+import { SucursalGetByEmpresaId, SucursalUpdate } from "../../../services/SucursalService";
 import { useDispatch } from "react-redux";
 import { setSucursal } from "../../../redux/slices/sucursalSlice";
 import { useAppSelector } from "../../../redux/hook";
+import DeleteIcon from '@mui/icons-material/delete'
 
 interface EmpresaCardProps {
     onClose: () => void;
@@ -51,6 +52,44 @@ const SucursalCard: React.FC<EmpresaCardProps> = ({ onClose, sucursal }) => {
         setHasCasaMatriz(hasCasaMatriz);
         setEditOpen(true);
     };
+
+    const handleDelete = async () => {
+        try {
+            const token = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+                },
+            });
+
+            const sucursalEliminada: Sucursal = { ...sucursal, eliminado: true }; // Crea una copia y marca como eliminada
+
+            const response = await SucursalUpdate(sucursalEliminada, token); // Llama al servicio de actualización
+
+            if (response.status === 200) {
+                toast.success("Sucursal eliminada correctamente", { // Mensaje de éxito
+                    position: "top-right",
+                    autoClose: 5000,
+                    // ... (otros opciones del toast)
+                });
+                onClose();
+
+            } else {
+                toast.error("Error al eliminar la sucursal", { // Mensaje de error
+                    position: "top-right",
+                    autoClose: 5000,
+                    // ... (otros opciones del toast)
+                });
+            }
+        } catch (error) {
+            console.error("Error al eliminar sucursal:", error);
+            toast.error("Error al eliminar la sucursal", { // Mensaje de error
+                position: "top-right",
+                autoClose: 5000,
+                // ... (otros opciones del toast)
+            });
+        }
+    };
+
 
     const handleClose = () => {
         setEditOpen(false);
@@ -108,9 +147,18 @@ const SucursalCard: React.FC<EmpresaCardProps> = ({ onClose, sucursal }) => {
                                 <IconButton onClick={handleOpen} color="primary">
                                     <EditIcon />
                                 </IconButton>
+                                
                             </Tooltip>
+                            
+                            <Tooltip title="Eliminar">
+                             <IconButton onClick={handleDelete} color="error">
+                                <DeleteIcon />
+                                </IconButton>
+
+                            </Tooltip>
+
                             <Tooltip title="Ver">
-                                <Button variant="contained"  sx={{ height: "30px", width: "90px",backgroundColor:"#af2919" }} onClick={redirectDashboard}>
+                                <Button variant="contained"  sx={{ height: "30px", width: "70px",backgroundColor:"#af2919" }} onClick={redirectDashboard}>
                                     <VisibilityIcon /> Ver
                                 </Button>
                             </Tooltip>

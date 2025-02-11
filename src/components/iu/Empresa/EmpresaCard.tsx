@@ -2,12 +2,17 @@ import { Button, Card, CardActions, CardHeader, IconButton, Tooltip } from "@mui
 import Empresa from "../../../types/Empresa";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from "react-router-dom";
 import EmpresaModal from "./EmpresaModal";
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../redux/hook";
 import { setEmpresa } from "../../../redux/slices/empresaSlice";
+import { useAuth0 } from "@auth0/auth0-react";
+import Sucursal from "../../../types/Sucursal";
+import { SucursalGetByEmpresaId } from "../../../services/SucursalService";
+import { EmpresaUpdate } from "../../../services/EmpresaService";
 
 interface EmpresaCardProps {
     onClose: () => void;
@@ -18,6 +23,9 @@ const EmpresaCard: React.FC<EmpresaCardProps> = ({ onClose, empresa }) => {
     const [editOpen, setEditOpen] = useState(false);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const { getAccessTokenSilently } = useAuth0();
+    const [empresas, setEmpresas] = useState<Empresa[]>([]);
+    
 
     const redirectSucursal = () => {
         dispatch(setEmpresa(empresa));
@@ -32,6 +40,58 @@ const EmpresaCard: React.FC<EmpresaCardProps> = ({ onClose, empresa }) => {
         setEditOpen(false);
         onClose();
     }
+
+    const handleDelete = async () => {
+        try {
+            const token = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+                },
+            });
+    
+            const sucursales: Sucursal[] = await SucursalGetByEmpresaId(empresa.id, token);
+    
+            const sucursalesActivas = sucursales.some(sucursal => !sucursal.eliminado);
+            if (sucursalesActivas) {
+                toast.error("No se puede eliminar la empresa porque tiene sucursales activas.", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    style: { 
+                        width: 'auto', // Ajusta el ancho automáticamente al contenido
+                        maxWidth: '400px', // Opcional: Establece un ancho máximo si lo necesitas
+                        wordWrap: 'break-word', // Permite cortar palabras
+                        whiteSpace: 'pre-wrap', // Conserva espacios y saltos de línea
+                    }
+                });
+                return; // Detener la eliminación
+            } else { 
+                const empresaEliminada: Empresa = { ...empresa, eliminado: true };
+    
+                const response = await EmpresaUpdate(empresaEliminada, token);
+    
+                if (response.status === 200) {
+                    toast.success("Empresa eliminada correctamente", {
+                        position: "top-right",
+                        autoClose: 5000,
+                    });
+                    onClose(); // Cierra el modal
+                } else {
+                    toast.error("Error al eliminar la empresa", {
+                        position: "top-right",
+                        autoClose: 5000,
+                    });
+                }
+            }
+        } catch (error) {
+            console.error("Error al eliminar la empresa:", error);
+            toast.error("Error al eliminar la empresa", {
+                position: "top-right",
+                autoClose: 5000,
+            });
+        }
+    };
+    
+
 
     const handleSuccess = () => {
         toast.success("Se actualizó correctamente la empresa", {
@@ -62,7 +122,7 @@ const EmpresaCard: React.FC<EmpresaCardProps> = ({ onClose, empresa }) => {
 
     return (
         <>
-            <Card key={empresa.id} style={{ width: '250px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', borderRadius: '8px' }}>
+            <Card key={empresa.id} style={{ width: '280px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', borderRadius: '8px' }}>
                 <CardHeader
                     title={empresa.nombre}
                     subheader={empresa.razonSocial}
@@ -75,6 +135,14 @@ const EmpresaCard: React.FC<EmpresaCardProps> = ({ onClose, empresa }) => {
                             <EditIcon sx={{ color: "#334e77" }} />
                         </IconButton>
                     </Tooltip>
+
+                    <Tooltip title="Eliminar">
+
+                    <IconButton onClick={handleDelete} color="error">
+                    <DeleteIcon />
+                    </IconButton>
+                    </Tooltip>
+
                     <Tooltip title="Sucursales">
                         <Button
                             variant="contained"

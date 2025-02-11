@@ -40,6 +40,10 @@ function SucursalList() {
         if(empresaRedux){
             const sucursales: Sucursal[] = await SucursalGetByEmpresaId(Number(empresaRedux.id), token);
             setSucursales(sucursales);
+
+            const sucursalesFiltradas = sucursales.filter(sucursal => !sucursal.eliminado);
+            setSucursales(sucursalesFiltradas); // Usar las sucursales filtradas
+
         }
     };
 

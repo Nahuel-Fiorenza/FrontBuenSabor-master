@@ -22,8 +22,13 @@ function EmpresaList() {
                 audience: import.meta.env.VITE_AUTH0_AUDIENCE,
             },
         });
+
         const empresas: Empresa[] = await EmpresaGetAll(token);
         setEmpresas(empresas);
+        
+        const empresasFiltradas = empresas.filter(empresas => !empresas.eliminado);
+        setEmpresas(empresasFiltradas); // Usar las empresas filtradas
+
     };
 
     const handleOpen = (empresa?: Empresa) => {

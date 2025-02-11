@@ -6,4 +6,5 @@ export default interface ArticuloInsumo extends Articulo{
     stockMaximo: number | null,
     stockMinimo: number | null,
     esParaElaborar: boolean
+    sucursales:number
 }

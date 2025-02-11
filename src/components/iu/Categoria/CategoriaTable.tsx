@@ -4,7 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, IconButton, T
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/delete";
 import CategoriaGetDto from '../../../types/CategoriaGetDto';
 import Categoria from '../../../types/Categoria';
 import { CategoriaBaja, CategoriaDelete } from '../../../services/CategoriaService';

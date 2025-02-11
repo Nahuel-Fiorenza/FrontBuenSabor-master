@@ -6,4 +6,6 @@ export default interface ArticuloManufacturado extends Articulo{
     tiempoEstimadoMinutos: number | null,
     preparacion: string,
     articuloManufacturadoDetalles: ArticuloManufacturadoDetalle[] | null
+    sucursales:number
+
 }

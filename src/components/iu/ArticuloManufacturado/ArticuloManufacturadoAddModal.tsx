@@ -61,6 +61,8 @@ const ArticuloManufacturadoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ 
     const [loading, setLoading] = useState(false);
     const [accionLoading, setAccionLoading] = useState("Creando");
     const { getAccessTokenSilently } = useAuth0();
+    const sucursal = useAppSelector((state) => state.sucursal.sucursal);
+
 
     const createArticuloManufacturado = async (articulo: ArticuloManufacturado) => {
         const token = await getAccessTokenSilently({
@@ -454,6 +456,13 @@ const ArticuloManufacturadoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ 
         }
 
         currentArticuloManufacturado.articuloManufacturadoDetalles = detalles;
+        if (currentArticuloManufacturado.sucursales == null) {
+          
+            if (sucursal) {
+                currentArticuloManufacturado.sucursales = sucursal.id;
+            }
+            
+        }
 
         if (currentArticuloManufacturado.id > 0) {
             setAccionLoading("Actualizando");

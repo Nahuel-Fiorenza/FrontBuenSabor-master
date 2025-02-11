@@ -54,6 +54,8 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
     const [loading, setLoading] = useState(false);
     const [accionLoading, setAccionLoading] = useState("Creando");
     const { getAccessTokenSilently } = useAuth0();
+    const sucursal = useAppSelector((state) => state.sucursal.sucursal);
+
 
     const createArticuloInsumo = async (articuloInsumo: ArticuloInsumo) => {
         const token = await getAccessTokenSilently({
@@ -82,6 +84,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
         });
         if (empresaRedux) {
             const categorias: Categoria[] = await CategoriaByEmpresaGetAll(empresaRedux.id, token);
+            console.log(categorias);
             setCategorias(categorias);
         }
     };
@@ -373,8 +376,18 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
             currentArticuloInsumo.imagenes = articuloImages;
         }
 
+        if (currentArticuloInsumo.sucursales == null) {
+          
+            if (sucursal) {
+                currentArticuloInsumo.sucursales = sucursal.id;
+            }
+            
+        }
+
+
         if (currentArticuloInsumo.id > 0) {
 
+            
             try {
                 const data = await updateArticuloInsumo(currentArticuloInsumo);
                 if (data.status !== 200) {

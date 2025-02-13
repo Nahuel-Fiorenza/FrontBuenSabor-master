@@ -241,12 +241,12 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         const maxLength: Record<string, number> = {
-            denominacion: 25,
-            precioCompra: 6,
-            precioVenta: 6,
-            stockActual: 4,
-            stockMinimo: 4,
-            stockMaximo: 4
+            denominacion: 30,
+            precioCompra: 8,
+            precioVenta: 8,
+            stockActual: 10,
+            stockMinimo: 10,
+            stockMaximo: 10
         };
 
         if (value.length > maxLength[name]) {

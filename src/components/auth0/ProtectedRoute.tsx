@@ -8,16 +8,18 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ roles }) => {
   const { isAuthenticated, user } = useAuth0();
-
-  // Comprobación del rol del usuario
-  const userHasRequiredRole = user && roles.some(role => JSON.stringify(user).includes(role));
-
-  // Redirigir si no está autenticado o no tiene el rol adecuado
+  const userRoles: string[] = user?.["https://your-app.com/roles"] || [];
+  console.log("Roles del usuario:", userRoles);
+  
+  // Comprobamos si el usuario tiene al menos uno de los roles requeridos
+  const userHasRequiredRole = user && roles.some(role => userRoles.includes(role));
+  console.log("Usuario tiene rol requerido:", userHasRequiredRole);
   if (!isAuthenticated || !userHasRequiredRole) {
     return <Navigate to="/unauthorized" />;
   }
-
+  
   return <Outlet />;
+  
 };
 
 export default ProtectedRoute;

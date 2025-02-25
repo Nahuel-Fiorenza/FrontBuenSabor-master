@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { useNavigate } from "react-router-dom";
 import colorConfigs from "../configs/colorConfig";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { EmpresaGetBySucursal } from "../services/EmpresaService";
+import { EmpresaGetBySucursal, EmpresaGetBySucursalID } from "../services/EmpresaService";
 import { setEmpresa } from "../redux/slices/empresaSlice";
 import { SucursalGetById } from "../services/SucursalService";
 import { setSucursal } from "../redux/slices/sucursalSlice";
@@ -29,7 +29,8 @@ const Ingreso = () => {
     });
 
     if (empleado?.sucursal) {
-      return await EmpresaGetBySucursal(empleado.sucursal.id, token);
+
+      return await EmpresaGetBySucursalID(empleado.sucursal.id, token);
     }
   };
 
@@ -41,6 +42,7 @@ const Ingreso = () => {
     });
 
     if (empleado?.sucursal) {
+      console.log(empleado.sucursal.id);
       return await SucursalGetById(empleado.sucursal.id, token);
     }
   };
@@ -78,12 +80,14 @@ const Ingreso = () => {
           },
         });
         const empleado = await EmpleadoGetByEmail(email, token);
+        console.log("id sucursal " + empleado.data.sucursal?.id);
         if (empleado) {
           dispatch(setUser(empleado.data));
           const empresa = await getEmpresaBySucursal();
           if (empresa) dispatch(setEmpresa(empresa));
           const sucursal = await getSucursalById();
           if (sucursal) dispatch(setSucursal(sucursal));
+          console.log(empleado.data.sucursal?.id);
         }
       };
       if (isAuthenticated && user?.email) {

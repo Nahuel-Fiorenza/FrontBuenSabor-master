@@ -8,7 +8,7 @@ import SucursalCard from "../components/iu/Sucursal/SucursalCard";
 import SucursalModal from "../components/iu/Sucursal/SucursalModal";
 import { toast, ToastContainer } from "react-toastify";
 import { useAppSelector } from "../redux/hook";
-import { EmpresaGetBySucursal } from "../services/EmpresaService";
+import { EmpresaGetBySucursal, EmpresaGetBySucursalID } from "../services/EmpresaService";
 
 const emptyEmpresa = { id: 0, eliminado: false, nombre: '', razonSocial: '', cuil: 0 };
 
@@ -43,7 +43,7 @@ function SucursalList() {
             console.log("id empresa redux " +  empresaRedux.id);
     console.log("id sucursal user "+userRedux?.sucursal?.id)
             const empresaUser = await getEmpresaBySucursal(); // Agregar await aquí
-            console.log("id empresa user despues de funcion ", empresaUser?.id); // Verificar si empresaUser tiene un id
+            console.log("id empresa user despues de funcion getEmpresaBysucursal", empresaUser?.id); // Verificar si empresaUser tiene un id
     
             if (empresaUser?.id) {
                 const sucursales: Sucursal[] = await SucursalGetByEmpresaId(Number(empresaUser.id), token);
@@ -59,11 +59,17 @@ function SucursalList() {
             audience: import.meta.env.VITE_AUTH0_AUDIENCE,
           },
         });
-    
+        
+    //Desahbilitar esta parte para reparar la busqueda por id de sucursal
         if (userRedux?.sucursal?.id) {
-            console.log("id sucursal en fucnion getEmpresaBySucursal "+userRedux.sucursal.id)
+            console.log("id sucursal en funcion getEmpresaBySucursal "+userRedux.sucursal.id)
           return await EmpresaGetBySucursal(userRedux?.sucursal?.id, token);
         }
+/* Habilitar para que traiga la empresa por sucursal
+        if (userRedux?.sucursal?.id) {
+            console.log("id sucursal en funcion getEmpresaBySucursal "+userRedux.sucursal.id)
+          return await EmpresaGetBySucursalID(userRedux?.sucursal?.id, token);
+        }*/
       };
 
     useEffect(() => {

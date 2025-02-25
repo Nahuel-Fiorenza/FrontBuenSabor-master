@@ -27,6 +27,7 @@ function PedidosList() {
 
     const getPedidos = async () => {
         if (sucursalRedux) {
+            console.log(sucursalRedux.id)
             const pedidos: Pedido[] = await PedidoGetBySucursal(sucursalRedux?.id);
             setPedidos(pedidos);
         }

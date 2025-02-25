@@ -8,6 +8,7 @@ import SucursalCard from "../components/iu/Sucursal/SucursalCard";
 import SucursalModal from "../components/iu/Sucursal/SucursalModal";
 import { toast, ToastContainer } from "react-toastify";
 import { useAppSelector } from "../redux/hook";
+import { EmpresaGetBySucursal } from "../services/EmpresaService";
 
 const emptyEmpresa = { id: 0, eliminado: false, nombre: '', razonSocial: '', cuil: 0 };
 
@@ -29,6 +30,7 @@ function SucursalList() {
     const [hasCasaMatriz, setHasCasaMatriz] = useState(false);
     const { getAccessTokenSilently } = useAuth0();
     const empresaRedux = useAppSelector((state) => state.empresa.empresa);
+    const userRedux=useAppSelector((state)=>state.user.user)
 
     const getAllSucursal = async () => {
         const token = await getAccessTokenSilently({
@@ -37,15 +39,32 @@ function SucursalList() {
             },
         });
 
-        if(empresaRedux){
-            const sucursales: Sucursal[] = await SucursalGetByEmpresaId(Number(empresaRedux.id), token);
-            setSucursales(sucursales);
-
-            const sucursalesFiltradas = sucursales.filter(sucursal => !sucursal.eliminado);
-            setSucursales(sucursalesFiltradas); // Usar las sucursales filtradas
-
+        if (empresaRedux) {
+            console.log("id empresa redux " +  empresaRedux.id);
+    console.log("id sucursal user "+userRedux?.sucursal?.id)
+            const empresaUser = await getEmpresaBySucursal(); // Agregar await aquí
+            console.log("id empresa user despues de funcion ", empresaUser?.id); // Verificar si empresaUser tiene un id
+    
+            if (empresaUser?.id) {
+                const sucursales: Sucursal[] = await SucursalGetByEmpresaId(Number(empresaUser.id), token);
+                const sucursalesFiltradas = sucursales.filter(sucursal => !sucursal.eliminado);
+                setSucursales(sucursalesFiltradas);
+            }
         }
     };
+
+    const getEmpresaBySucursal = async () => {
+        const token = await getAccessTokenSilently({
+          authorizationParams: {
+            audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+          },
+        });
+    
+        if (userRedux?.sucursal?.id) {
+            console.log("id sucursal en fucnion getEmpresaBySucursal "+userRedux.sucursal.id)
+          return await EmpresaGetBySucursal(userRedux?.sucursal?.id, token);
+        }
+      };
 
     useEffect(() => {
         getAllSucursal();

@@ -75,5 +75,20 @@ export async function EmpresaGetBySucursal(id: number, token: string){
 		},
         mode: 'cors'
 	});
+	console.log("Parametro pasado para la busqueda" + id)
+	return await response.json() as Empresa;
+}
+
+export async function EmpresaGetBySucursalID(id: number, token: string){
+	const urlServer = `${apiUrl}/empresa/findBySucursalID/${id}`;
+	const response = await fetch(urlServer, {
+		method: 'GET',
+        headers: {
+			'Authorization': `Bearer ${token}`,
+			'Content-type': 'application/json',
+		},
+        mode: 'cors'
+	});
+	console.log("Parametro pasado para la busqueda" + id)
 	return await response.json() as Empresa;
 }

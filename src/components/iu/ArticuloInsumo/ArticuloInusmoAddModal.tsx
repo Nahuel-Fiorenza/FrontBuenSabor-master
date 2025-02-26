@@ -160,6 +160,22 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
         }
 
     };
+     const filterCategorias = (categorias: Categoria[]): Categoria[] => {
+            // Filtramos las categorías que no están eliminadas, que no son insumos y que no tienen subcategorías
+            const categoriasFiltradas = categorias.filter((categoria) => {
+                // Verifica si la categoría está activa, no es insumo y no tiene subcategorías
+                const isValid = !categoria.eliminado && categoria.esInsumo;
+                const hasNoSubcategorias = categoria?.subCategorias?.length === 0; // Verificamos si el array de subcategorías está vacío
+        
+                return isValid && hasNoSubcategorias;
+            });
+        
+            console.log("Categorías filtradas:", categoriasFiltradas);
+            return categoriasFiltradas;
+        };
+        
+    
+        const categoriasFiltradas = filterCategorias(categorias);
 
     useEffect(() => {
         getAllCategoriaByEmpresa();
@@ -498,7 +514,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                                     <Grid item xs={4}>
                                         <FormControl fullWidth error={!!errors.categoria}>
                                             <Autocomplete
-                                                options={categorias.filter(categoria => categoria.esInsumo && !categoria.eliminado)}
+                                                options={categoriasFiltradas}
                                                 getOptionLabel={(option) => option.denominacion}
                                                 renderInput={(params) => (
                                                     <TextField

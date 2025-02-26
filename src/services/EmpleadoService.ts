@@ -60,13 +60,12 @@ export async function EmpleadoGetById(id: number, token: string){
 	return await response.json() as Empleado;
 }
 
-export async function EmpleadoUpdate(empleado: Empleado, token: string){
+export async function EmpleadoUpdate(empleado: Empleado){
 	const urlServer = `${apiUrl}/empleado/${empleado.id}`;
 	const response = await fetch(urlServer, {
 		method: 'PUT',
 		body: JSON.stringify(empleado),
         headers: {
-			'Authorization': `Bearer ${token}`,
 			'Content-type': 'application/json',
 		},
         mode: 'cors'

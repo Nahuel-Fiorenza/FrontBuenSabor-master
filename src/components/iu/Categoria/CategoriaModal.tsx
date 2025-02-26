@@ -8,6 +8,8 @@ import { SucursalGetByEmpresaId } from "../../../services/SucursalService";
 import { CategoriaCreate, CategoriaUpdate } from "../../../services/CategoriaService";
 import colorConfigs from "../../../configs/colorConfig"
 import { useAppSelector } from "../../../redux/hook";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Refresh } from "@mui/icons-material";
 
 const emptyCategoria = { id: null, eliminado: false, denominacion: '', esInsumo: false, sucursales: [], subCategorias: [] };
 
@@ -74,9 +76,10 @@ const CategoriaModal: React.FC<CategoriaModalProps> = ({ open, onClose, categori
         }
     };
 
-    const handleEsInsumoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentCategoria({ ...currentCategoria, esInsumo: e.target.checked });
-    };
+        const handleEsInsumoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            setCurrentCategoria({ ...currentCategoria, esInsumo: e.target.checked });
+
+        };
 
     const handleSucursalChange = (id: number) => {
         const sucursalesSeleccionadas = currentCategoria.sucursales || [];
@@ -190,6 +193,8 @@ const CategoriaModal: React.FC<CategoriaModalProps> = ({ open, onClose, categori
 
         success();
         handleClose();
+        window.location.reload(); // Recarga la página completamente
+
     };
 
     return (
@@ -228,7 +233,7 @@ const CategoriaModal: React.FC<CategoriaModalProps> = ({ open, onClose, categori
                         <Grid item xs={4} container justifyContent="center" alignItems="center">
                             {
                                 categoria.id !== null && categoria.id > 0 ?
-                                    <Tooltip title="No se puede modificar esta opción." arrow>
+                                    <Tooltip title="Se debe refrescar la pantalla para visualizar el cambio." arrow>
                                         <FormControl fullWidth>
                                             <FormControlLabel
                                                 control={

@@ -60,16 +60,12 @@ function SucursalList() {
           },
         });
         
-    //Desahbilitar esta parte para reparar la busqueda por id de sucursal
-        if (userRedux?.sucursal?.id) {
-            console.log("id sucursal en funcion getEmpresaBySucursal "+userRedux.sucursal.id)
-          return await EmpresaGetBySucursal(userRedux?.sucursal?.id, token);
-        }
-/* Habilitar para que traiga la empresa por sucursal
+    
+// Habilitar para que traiga la empresa por sucursal
         if (userRedux?.sucursal?.id) {
             console.log("id sucursal en funcion getEmpresaBySucursal "+userRedux.sucursal.id)
           return await EmpresaGetBySucursalID(userRedux?.sucursal?.id, token);
-        }*/
+        }
       };
 
     useEffect(() => {
@@ -123,11 +119,29 @@ function SucursalList() {
 
     return (
         <div style={{ backgroundColor: '#c5c5c5', padding: '20px', borderRadius: '8px' }}>
-            <Typography
+             <Typography
                 variant="h4"
                 component="h4"
                 align="center"
                 style={{ fontWeight: 'bold', marginBottom: '20px', color: 'black', textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)' }}
+            >
+                Bienvenido a la empresa:    
+            </Typography>
+            <div style={{ backgroundColor: '#AF2919', padding: '10px', borderRadius: '8px',width:'50%', margin: '0 auto', }} >
+            <Typography
+                variant="h4"
+                component="h4"
+                align="center"
+                style={{ margin: '0 auto',textTransform: 'uppercase', color: 'white', textShadow: '1px 1px 2px rgba(32, 19, 13, 0.93)' }}
+            >
+                 {empresaRedux?.nombre}
+            </Typography>
+            </div>
+            <Typography
+                variant="h4"
+                component="h4"
+                align="center"
+                style={{ marginTop:"10px",fontWeight: 'bold', marginBottom: '20px', color: 'black', textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)' }}
             >
                 Seleccione una Sucursal
             </Typography>

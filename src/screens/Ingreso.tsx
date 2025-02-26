@@ -4,7 +4,7 @@ import LogoutButton from "../components/common/LogoutButton";
 import ingresoImage from '../assets/images/ingreso.png';
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { EmpleadoGetByEmail } from "../services/EmpleadoService";
+import { EmpleadoGetByEmail, EmpleadoUpdate } from "../services/EmpleadoService";
 import { setUser } from "../redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { useNavigate } from "react-router-dom";
@@ -73,14 +73,19 @@ const Ingreso = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+
       const traerEmpleado = async (email: string) => {
         const token = await getAccessTokenSilently({
           authorizationParams: {
             audience: import.meta.env.VITE_AUTH0_AUDIENCE,
           },
         });
+
+
         const empleado = await EmpleadoGetByEmail(email, token);
         console.log("id sucursal " + empleado.data.sucursal?.id);
+
+
         if (empleado) {
           dispatch(setUser(empleado.data));
           const empresa = await getEmpresaBySucursal();
@@ -90,9 +95,29 @@ const Ingreso = () => {
           console.log(empleado.data.sucursal?.id);
         }
       };
+
+      const auth0Id = user?.sub ? user.sub.replace("auth0|", "") : ""; // Obtener el ID de Auth0
+
+      console.log("Auth0 ID:", auth0Id);
+
+      if (empleado && auth0Id) {
+
+        const empleadoActualizado = {
+          ...empleado,
+          usuario: {
+            ...empleado.usuario,
+            auth0Id: auth0Id,
+          },
+        };
+      
+        EmpleadoUpdate(empleadoActualizado);
+      }
+
       if (isAuthenticated && user?.email) {
         traerEmpleado(user.email);
       }
+
+
     }
   }, [isAuthenticated]);
 

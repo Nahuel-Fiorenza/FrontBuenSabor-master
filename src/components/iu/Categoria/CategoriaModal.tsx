@@ -237,7 +237,7 @@ const CategoriaModal: React.FC<CategoriaModalProps> = ({ open, onClose, categori
                                                         onChange={handleEsInsumoChange}
                                                         name="esInsumo"
                                                         color="primary"
-                                                        disabled={categoria.id !== null && categoria.id > 0}
+                                                        
                                                         sx={{
                                                             '&.Mui-checked': {
                                                                 color: "#233044"

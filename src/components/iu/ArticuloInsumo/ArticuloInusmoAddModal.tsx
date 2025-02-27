@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Button, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, Modal, Switch, TextField, Tooltip, Typography } from "@mui/material";
 import ArticuloInsumo from "../../../types/ArticuloInsumo";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import Imagen from "../../../types/Imagen";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CategoriaByEmpresaGetAll } from "../../../services/CategoriaService";
@@ -55,6 +55,12 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
     const [accionLoading, setAccionLoading] = useState("Creando");
     const { getAccessTokenSilently } = useAuth0();
     const sucursal = useAppSelector((state) => state.sucursal.sucursal);
+    const precioVentaRef = useRef<HTMLInputElement | null>(null);
+    const stockActualRef = useRef<HTMLInputElement | null>(null);
+    const stockMinimoRef = useRef<HTMLInputElement | null>(null);
+    const stockMaximoRef = useRef<HTMLInputElement | null>(null);
+    const hasErrors = Object.values(errors).some(error => error !== '');
+
 
 
     const createArticuloInsumo = async (articuloInsumo: ArticuloInsumo) => {
@@ -256,6 +262,8 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        const newErrors: { [key: string]: string } = {};
+
         const maxLength: Record<string, number> = {
             denominacion: 30,
             precioCompra: 8,
@@ -277,6 +285,72 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
         if (errors[name]) {
             setErrors({ ...errors, [name]: '' });
         }
+        
+         // Validación: Precio Venta no puede ser menor a Precio Compra
+         
+         if (name === "precioVenta" && parseFloat(value) < parseFloat(String(currentArticuloInsumo.precioCompra ?? "0"))) {
+            newErrors.precioVenta= "El precio de venta no puede ser menor al precio de compra."
+
+            // Aplicar foco al campo de precioVenta
+            setTimeout(() => {
+                precioVentaRef.current?.focus();
+            }, 0);
+        } else {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                [name]: ''
+            }));
+        }
+
+        //validacion para el STOCK 
+         // Validación: Stock actual no puede ser menor a stock MINIMO NI mayor a stock MAXIMO
+         if (name === "stockActual" && parseFloat(value) < parseFloat(String(currentArticuloInsumo.stockMinimo ?? "0")) || name === "stockActual" && parseFloat(value) > parseFloat(String(currentArticuloInsumo.stockMaximo ?? "0"))) {
+            newErrors.stockActual= "El stock Actual no debe ser menor al Stock Minimo ni mayor al Stock Máximo."
+
+            // Aplicar foco al campo de precioVenta
+            setTimeout(() => {
+                stockActualRef.current?.focus();
+            }, 0);
+        } else {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                [name]: ''
+            }));
+        }
+
+         //validacion para el STOCK MINIMO
+         // Validación: Stock MINIMO no puede ser menor a stock ACTUAL NI mayor a stock MAXIMO
+         if (name === "stockMinimo" && parseFloat(value) > parseFloat(String(currentArticuloInsumo.stockActual ?? "0")) || name === "stockMinimo" && parseFloat(value) > parseFloat(String(currentArticuloInsumo.stockMaximo ?? "0"))) {
+            newErrors.stockMinimo= "El stock Minimo no debe ser mayor al Stock Actual ni mayor al Stock Máximo."
+
+            // Aplicar foco al campo de precioVenta
+            setTimeout(() => {
+                stockMinimoRef.current?.focus();
+            }, 0);
+        } else {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                [name]: ''
+            }));
+        }
+          //validacion para el STOCK MAXIMO
+         // Validación: Stock MAXIMO no puede ser menor a stock ACTUAL NI aL stock MINIMO
+         if (name === "stockMaximo" && parseFloat(value) < parseFloat(String(currentArticuloInsumo.stockActual ?? "0")) || name === "stockMaximo" && parseFloat(value) < parseFloat(String(currentArticuloInsumo.stockMinimo ?? "0"))) {
+            newErrors.stockMaximo= "El stock Maximo no debe ser menor al Stock Actual ni al Stock Minimo."
+
+            // Aplicar foco al campo de precioVenta
+            setTimeout(() => {
+                stockMaximoRef.current?.focus();
+            }, 0);
+        } else {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                [name]: ''
+            }));
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -357,6 +431,8 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
         if (!currentArticuloInsumo.stockMaximo) {
             newErrors.stockMaximo = 'El stock maximo es obligatorio.';
         }
+
+        
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -458,7 +534,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                         <CloseIcon />
                     </IconButton>
                     <Typography variant="h6" gutterBottom>
-                        {currentArticuloInsumo.id === 0 ? 'Crear Articulo Insumo' : 'Actualizar Articulo Insumo'}
+                        {currentArticuloInsumo.id === 0 ? 'Crear Articulo Insumo' : 'Actualizar Articulo Insumo' }
                     </Typography>
                     {
                         modalStep === 1 && (
@@ -628,6 +704,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                                             <Tooltip title="Insumo que es para elborar no se debe vender." arrow>
                                                 <FormControl fullWidth error={!!errors.precioVenta}>
                                                     <TextField
+                                                        ref={precioVentaRef}
                                                         label="Precio de Venta"
                                                         name="precioVenta"
                                                         type="decimal"
@@ -652,6 +729,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                                             :
                                             <FormControl fullWidth error={!!errors.precioVenta}>
                                                 <TextField
+                                                    ref={precioVentaRef}
                                                     label="Precio de Venta"
                                                     name="precioVenta"
                                                     type="decimal"
@@ -679,6 +757,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                                     <Grid item xs={4}>
                                         <FormControl fullWidth error={!!errors.stockActual}>
                                             <TextField
+                                                ref={stockActualRef}
                                                 label="Stock Actual"
                                                 name="stockActual"
                                                 type="decimal"
@@ -702,6 +781,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                                     <Grid item xs={4}>
                                         <FormControl fullWidth error={!!errors.stockMinimo}>
                                             <TextField
+                                                ref={stockMinimoRef}
                                                 label="Stock Minimo"
                                                 name="stockMinimo"
                                                 fullWidth
@@ -725,6 +805,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                                     <Grid item xs={4}>
                                         <FormControl fullWidth error={!!errors.stockMaximo}>
                                             <TextField
+                                                ref={stockMaximoRef}
                                                 label="Stock Maximo"
                                                 name="stockMaximo"
                                                 type="decimal"
@@ -750,7 +831,7 @@ const ArticuloInsumoAddModal: React.FC<ArticuloInsumoAddModalProps> = ({ open, o
                                     <Button onClick={handlePreviousStep} variant="contained" sx={{ ...colorConfigs.backButtonStyles }}>
                                         Atrás
                                     </Button>
-                                    <Button onClick={handleSubmit} variant="contained" sx={{ ...colorConfigs.buttonStyles }}>
+                                    <Button onClick={handleSubmit}  disabled={hasErrors} variant="contained" sx={{ ...colorConfigs.buttonStyles } }>
                                         {currentArticuloInsumo.id !== null && currentArticuloInsumo.id > 0 ? "Actualizar Insumo" : "Crear Insumo"}
                                     </Button>
                                     <LoadingModal open={loading} msj={"Insumo"} accion={accionLoading} />
